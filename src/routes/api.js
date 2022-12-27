@@ -20,4 +20,5 @@ router.post(
 router.get('/allUsers', userController.allUsers);
 router.get('/allQuizzes', quizController.allQuizzes);
 router.get('/quiz/:id', quizController.findById);
+router.post('/createQuiz', validate(quizValidator.createQuiz), quizController.createQuiz),
 module.exports = router;

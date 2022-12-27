@@ -40,3 +40,22 @@ export const findById = async (req, res) => {
     return errorResponse(req, res, error.message);
   }
 };
+
+export const createQuiz = async (req, res) => {
+  try {
+    const {
+      name, description, questions,
+    } = req.body;
+
+    const payload = {
+      name,
+      description,
+      questions,
+    };
+
+    const newQuiz = await Quiz.create(payload);
+    return successResponse(req, res, {});
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
