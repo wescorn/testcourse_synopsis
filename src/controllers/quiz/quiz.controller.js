@@ -62,7 +62,7 @@ export const create = async (req, res) => {
     if (payload.questions.length >= 4 && payload.questions.length <= 20) {
       //Loop through the questions to check if a question has invalid number of answers
       
-      for (let index = 0; index < payload.questions.length; index++) {
+      for (let i = 0; index < payload.questions.length; i++) {
         
         if (payload.questions[i].answers.length < 2 || payload.questions[i].answers.length > 4) {
           throw new Error("Number of answers to a question must be between 2-4")
@@ -80,7 +80,7 @@ export const create = async (req, res) => {
         }
         
         //if there are no errors and the index is equal to the last entry in the index
-        if (index == payload.questions.length-1) {
+        if (i == payload.questions.length-1) {
           const newQuiz = await Quiz.create(payload, {
             include: [ {model: Question, as: 'questions', include: [{model: Answer, as: 'answers'}]}]
           });
