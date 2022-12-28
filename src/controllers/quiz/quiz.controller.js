@@ -59,24 +59,39 @@ export const create = async (req, res) => {
     console.log(payload);
 
     //Check if quiz has valid number of questions
-    if (payload.questions.length >= 4 && payload.questions.length <= 20){
+    if (payload.questions.length >= 4 && payload.questions.length <= 20) {
       //Loop through the questions to check if a question has invalid number of answers
-      payload.questions.array.forEach(async question => {
-        if(question.answer.length < 2 || question.answer.length > 4){
-          throw new Error("Number of answers to a question should be - 2-4")
-        } else{
+      
+      for (let index = 0; index < payload.questions.length; index++) {
+        
+        if (payload.questions[i].answers.length < 2 || payload.questions[i].answers.length > 4) {
+          throw new Error("Number of answers to a question must be between 2-4")
+        } else {
+          //checks if there are true any correct answers in a question
+          let trueExists = false;
+          payload.questions[i].answers.forEach(answer => {
+            if (answer.isCorrect == true) {
+              trueExists = true
+            }
+          });
+          if (!trueExists) {
+            throw new Error("Question has no correct answer")
+          }
+        }
+        
+        //if there are no errors and the index is equal to the last entry in the index
+        if (index == payload.questions.length-1) {
           const newQuiz = await Quiz.create(payload, {
             include: [ {model: Question, as: 'questions', include: [{model: Answer, as: 'answers'}]}]
           });
           return successResponse(req, res, newQuiz);
         }
-      });
+      }
     } else if (payload.questions.length < 4) {
       throw new Error("Minimum number of questions is - 4")
     } else if (payload.questions.length > 20) {
       throw new Error("Maximum number of questions is - 20")
     }
-
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
