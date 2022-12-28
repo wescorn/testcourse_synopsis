@@ -27,8 +27,9 @@ export const get = async (req, res) => {
       where: { id: param.id }, 
       include: [{ 
         model: Question,
+        as: 'questions',
         include: [{ 
-          model: Answer}] 
+          model: Answer, as: 'answers'}] 
         }] 
       });
 
@@ -45,20 +46,20 @@ export const create = async (req, res) => {
   try {
     const user = req.user;
     const {
-      name, description, Questions,
+      name, description, questions,
     } = req.body;
 
     const payload = {
       userId: user.id,
       name,
       description,
-      Questions
+      questions
     };
 
     console.log(payload);
 
     const newQuiz = await Quiz.create(payload, {
-      include: [ {model: Question, include: [{model: Answer}]}]
+      include: [ {model: Question, as: 'questions', include: [{model: Answer, as: 'answers'}]}]
     });
     return successResponse(req, res, newQuiz);
   } catch (error) {

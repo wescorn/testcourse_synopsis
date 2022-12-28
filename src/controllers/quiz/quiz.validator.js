@@ -12,9 +12,9 @@ export const create = {
   body: {
     name: Joi.string().required(),
     description: Joi.string().required(),
-    Questions: Joi.array().items(Joi.object({
+    questions: Joi.array().items(Joi.object({
       text: Joi.string().required(),
-      Answers: Joi.array().items(Joi.object({
+      answers: Joi.array().items(Joi.object({
         text: Joi.string().required(),
         isCorrect: Joi.boolean().required(),
       })).required(),
