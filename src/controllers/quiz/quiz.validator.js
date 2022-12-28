@@ -8,14 +8,14 @@ export const findById = {
   },
 };
 
-export const createQuiz = {
+export const create = {
   body: {
     name: Joi.string().required(),
     description: Joi.string().required(),
-    questions: Joi.array().items(Joi.object({
-      questionText: Joi.string().required(),
-      answers: Joi.array().items(Joi.object({
-        answerText: Joi.string().required(),
+    Questions: Joi.array().items(Joi.object({
+      text: Joi.string().required(),
+      Answers: Joi.array().items(Joi.object({
+        text: Joi.string().required(),
         isCorrect: Joi.boolean().required(),
       })).required(),
     }),).required(),

@@ -18,7 +18,10 @@ router.post(
   userController.changePassword,
 );
 router.get('/allUsers', userController.allUsers);
-router.get('/allQuizzes', quizController.allQuizzes);
-router.get('/quiz/:id', quizController.findById);
-router.post('/createQuiz', validate(quizValidator.createQuiz), quizController.createQuiz),
+
+router.get('/quiz', quizController.index);
+router.get('/quiz/:id', quizController.get);
+router.post('/quiz', validate(quizValidator.create), quizController.create),
+router.put('/quiz/:id', quizController.update);
+router.delete('/quiz/:id', quizController.destroy);
 module.exports = router;

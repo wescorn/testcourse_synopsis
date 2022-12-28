@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Quiz, Question, Answer } from '../../models';
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 
-export const allQuizzes = async (req, res) => {
+export const index = async (req, res) => {
   try {
     const page = req.params.page || 1;
     const limit = 2;
@@ -19,14 +19,14 @@ export const allQuizzes = async (req, res) => {
   }
 };
 
-export const findById = async (req, res) => {
+export const get = async (req, res) => {
   try {
     const param = { ...req.body, ...req.params, ...req.query };
 
     const quiz = await Quiz.findOne({ 
       where: { id: param.id }, 
       include: [{ 
-        model: Question, 
+        model: Question,
         include: [{ 
           model: Answer}] 
         }] 
@@ -41,21 +41,36 @@ export const findById = async (req, res) => {
   }
 };
 
-export const createQuiz = async (req, res) => {
+export const create = async (req, res) => {
   try {
+    const user = req.user;
     const {
-      name, description, questions,
+      name, description, Questions,
     } = req.body;
 
     const payload = {
+      userId: user.id,
       name,
       description,
-      questions,
+      Questions
     };
 
-    const newQuiz = await Quiz.create(payload);
-    return successResponse(req, res, {});
+    console.log(payload);
+
+    const newQuiz = await Quiz.create(payload, {
+      include: [ {model: Question, include: [{model: Answer}]}]
+    });
+    return successResponse(req, res, newQuiz);
   } catch (error) {
     return errorResponse(req, res, error.message);
   }
+};
+
+
+export const update = async (req, res) => {
+  return errorResponse(req, res, 'Not implemented yet c:');
+};
+
+export const destroy = async (req, res) => {
+  return errorResponse(req, res, 'Not implemented yet c:');
 };

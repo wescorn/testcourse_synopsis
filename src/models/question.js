@@ -10,15 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.Quiz)
+      this.belongsTo(models.Quiz, { foreignKey: 'quizId' })
       this.hasMany(models.Answer)
     }
   }
   Question.init({
+    quizId: DataTypes.INTEGER.UNSIGNED,
     text: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Question',
+    defaultScope: {
+      attributes: { exclude: ['QuizId', 'createdAt', 'updatedAt'] },
+    }
   });
   return Question;
 };
