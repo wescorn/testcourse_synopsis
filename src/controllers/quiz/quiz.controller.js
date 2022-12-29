@@ -34,7 +34,6 @@ export const get = async (req, res) => {
       });
 
     if (!quiz) return errorResponse(req, res, DATA_DOES_NOT_EXIST, 400);
-    quiz.getUser().then(res => {console.log(res)})
 
     return successResponse(req, res, quiz);
   } catch (error) {
