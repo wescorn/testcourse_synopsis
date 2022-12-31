@@ -1,4 +1,4 @@
-export const successResponse = (req, res, data, code = 200) => res.send({
+export const successResponse = (req, res, data, code = 200) => res.status(code).send({
   code,
   data,
   success: true,
@@ -10,7 +10,7 @@ export const errorResponse = (
   errorMessage = 'Something went wrong',
   code = 500,
   error = {},
-) => res.status(500).json({
+) => res.status(code).json({
   code,
   errorMessage,
   error,

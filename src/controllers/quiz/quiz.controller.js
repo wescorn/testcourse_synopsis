@@ -52,25 +52,26 @@ export const create = async (req, res) => {
       questions
     };
 
-    //validate stuff
-    if (payload.questions.length < 4) throw new Error("Minimum number of questions is - 4")
-    if (payload.questions.length > 20) throw new Error("Maximum number of questions is - 20")
+    if (payload.questions.length < 2) 
+      throw new Error("Minimum number of questions is - 2");
+    if (payload.questions.length > 10) 
+      throw new Error("Maximum number of questions is - 10");
     payload.questions.forEach((question, i) => {
-      if (question.answers.length < 2 || question.answers.length > 4) throw new Error("Number of answers to a question must be between 2-4")
-      if (!question.answers.find(answer => answer.isCorrect)) throw new Error("Question has no correct answer")
+      if (question.answers.length < 2 || question.answers.length > 4) 
+        throw new Error("Number of answers to a question must be between 2-4");
+      if (!question.answers.find(answer => answer.isCorrect)) 
+        throw new Error("Question has no correct answer");
     });
 
-
-    // all good, so create quiz, ez
     const newQuiz = await Quiz.create(payload, {
       include: [{ model: Question, as: 'questions', include: [{ model: Answer, as: 'answers' }] }]
     });
-    return successResponse(req, res, newQuiz);
-
+    return successResponse(req, res, newQuiz, 201);
   } catch (error) {
-    return errorResponse(req, res, error.message);
+    const code = 422;
+    return errorResponse(req, res, error.message, code);
   }
-};
+}
 
 
 export const update = async (req, res) => {
