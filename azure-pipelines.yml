@@ -20,5 +20,5 @@ steps:
   displayName: 'npm install'
 
 - script: |
-    npx jest --coverage
+    npm run test:cover
   displayName: 'tests'
