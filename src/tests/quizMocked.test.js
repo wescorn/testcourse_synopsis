@@ -42,9 +42,11 @@ describe('Controller Testing With Mock', () => {
             });
 
             const response = await quizController.create(req, res);
-            
-           // expect(response.statusCode).toBe(body.code);
+
+            //check for correct statusCode
+           expect(response.status).toHaveBeenCalledWith(body.code); 
         }
+        //Check that certain methods have been called the expected amount of times
         expect(Quiz.create).toHaveBeenCalledTimes(1);
         expect(Helpers.successResponse).toHaveBeenCalledTimes(1);
         expect(Helpers.errorResponse).toHaveBeenCalledTimes(5);
