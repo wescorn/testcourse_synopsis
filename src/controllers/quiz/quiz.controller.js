@@ -63,7 +63,6 @@ export const create = async (req, res) => {
         throw new Error("Question has no correct answer");
     });
 
-    console.log('SHOULD DEFINETLY CREATE QUIZ');
     const newQuiz = await Quiz.create(payload, {
       include: [{ model: Question, as: 'questions', include: [{ model: Answer, as: 'answers' }] }]
     });
@@ -71,7 +70,6 @@ export const create = async (req, res) => {
     return successResponse(req, res, newQuiz, 201);
   } catch (error) {
     const code = 422;
-    console.log('NOPEDY NOPE NOPE');
     return errorResponse(req, res, error.message, code);
   }
 }
