@@ -20,5 +20,5 @@ steps:
   displayName: 'npm install'
 
 - script: |
-    npm run test:cover
+    node ./node_modules/jest-cli/bin/jest
   displayName: 'tests'
