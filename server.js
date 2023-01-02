@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const dotenv = require('dotenv');
 const cluster = require('cluster');
 const numCores = require('os').cpus().length;
-const app = require('#app').default();
+const app = require('./app').default();
 
 
 

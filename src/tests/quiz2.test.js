@@ -1,5 +1,5 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import * as _test_data from '#test_data';
+import * as _test_data from '../tests/resources/test_data/test_data';
 import * as quizController from '../controllers/quiz/quiz.controller';
 
 
@@ -10,7 +10,7 @@ const mockCreate = jest.fn().mockImplementation(
 );
 //const Quiz = require('../models/quiz');
 
-jest.mock('#@/src/models/index', () => ({
+jest.mock('../models/index', () => ({
   quiz: jest.fn()
 }));
 

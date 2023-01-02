@@ -7,7 +7,7 @@ const test_data = require('../../../resources/test_data/test_data');
 const feature = loadFeature('./create.feature');
 
 defineFeature(feature, test => {
-  const app = require('#app').default();
+  const app = require('../../../../../app').default();
   let res = null;
   let token = null;
 

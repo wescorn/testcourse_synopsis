@@ -1,10 +1,10 @@
-import * as _test_data from '#test_data';
+import * as _test_data from '../tests/resources/test_data/test_data';
 import jwt from 'jsonwebtoken';
 
 const request = require('supertest');
 
 const conn = require('../config/sequelize-connect');
-const app = require('#app').default();
+const app = require('../../app').default();
 
 describe('APIs Testing...', () => {
   test('Create Quiz', async () => {

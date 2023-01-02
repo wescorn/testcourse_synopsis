@@ -23,8 +23,8 @@ steps:
 - task: CmdLine@2
   displayName: Run the WebApi in the background
   inputs:
-    script: 'npm start'
+    script: 'npm start &'
 
 - script: |
     npm test:cover
-  displayName: 'npm install'
+  displayName: 'tests'
