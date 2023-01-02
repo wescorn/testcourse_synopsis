@@ -2,7 +2,7 @@ const request = require('supertest');
 
 
 const conn = require('../config/sequelize-connect');
-const app = require('../../app');
+const app = require('../../app').default();
 
 let authorizationToken;
 let UserData;

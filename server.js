@@ -4,7 +4,9 @@ const chalk = require('chalk');
 const dotenv = require('dotenv');
 const cluster = require('cluster');
 const numCores = require('os').cpus().length;
-const app = require('./app');
+const app = require('#app').default();
+
+
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (uncaughtExc) => {

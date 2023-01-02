@@ -10,24 +10,28 @@ import adminRoutes from './src/routes/admin';
 import apiMiddleware from './src/middleware/apiAuth';
 import adminMiddleware from './src/middleware/adminAuth';
 import errorHandler from './src/middleware/errorHandler';
-
+import { dbConnect } from './src/config/sequelize-connect';
 dotenv.config();
 
-const conn = require('./src/config/sequelize-connect');
-conn.dbConnect();
 
-const app = express();
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  }),
-);
+export default function(db_setup = dbConnect) {
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use('/pub', publicRoutes);
-app.use('/api', apiMiddleware, apiRoutes);
-app.use('/api/admin', apiMiddleware, adminMiddleware, adminRoutes);
-app.use(errorHandler);
+  db_setup();
+  
+  const app = express();
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    }),
+  );
+  
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use('/pub', publicRoutes);
+  app.use('/api', apiMiddleware, apiRoutes);
+  app.use('/api/admin', apiMiddleware, adminMiddleware, adminRoutes);
+  app.use(errorHandler);
 
-module.exports = app;
+
+  return app;
+}

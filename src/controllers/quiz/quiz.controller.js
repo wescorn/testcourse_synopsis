@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import axios from 'axios';
-import { Quiz, Question, Answer } from '../../models';
+import { Answer, Question, Quiz } from '../../models';
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 
 export const index = async (req, res) => {
@@ -63,12 +63,15 @@ export const create = async (req, res) => {
         throw new Error("Question has no correct answer");
     });
 
+    console.log('SHOULD DEFINETLY CREATE QUIZ');
     const newQuiz = await Quiz.create(payload, {
       include: [{ model: Question, as: 'questions', include: [{ model: Answer, as: 'answers' }] }]
     });
+    
     return successResponse(req, res, newQuiz, 201);
   } catch (error) {
     const code = 422;
+    console.log('NOPEDY NOPE NOPE');
     return errorResponse(req, res, error.message, code);
   }
 }

@@ -1,12 +1,13 @@
 const { beforeEach, afterAll, afterEach } = require('@jest/globals');
 const { defineFeature, loadFeature } = require('jest-cucumber');
+const path = require('path');
 const request = require('supertest');
 const jwt = require('jsonwebtoken');
-
-const feature = loadFeature('create_quiz.feature');
+const test_data = require('../../../resources/test_data/test_data');
+const feature = loadFeature('./create.feature');
 
 defineFeature(feature, test => {
-  const app = require('../../../../app.js');
+  const app = require('#app').default();
   let res = null;
   let token = null;
 
@@ -23,9 +24,8 @@ defineFeature(feature, test => {
         process.env.SECRET,
       );
     });
-
     when(/^I attempt to create a quiz with (.*)$/, async (quiz_data) => {
-      const data = require(quiz_data);
+      const data = test_data[quiz_data];
       res = await request(app)
       .post('/api/quiz')
       .set('x-token', token)

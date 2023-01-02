@@ -18,6 +18,7 @@ const apiAuth = async (req, res, next) => {
       return errorResponse(req, res, 'User is not found in system', 401);
     }
     const reqUser = { ...user.get() };
+    
     reqUser.userId = user.id;
     req.user = reqUser;
     return next();
