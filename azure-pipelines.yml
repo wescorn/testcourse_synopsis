@@ -17,5 +17,14 @@ steps:
 
 - script: |
     npm install
-    npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm install'
+
+  # Run the Web API in the background
+- task: CmdLine@2
+  displayName: Run the WebApi in the background
+  inputs:
+    script: 'npm start'
+
+- script: |
+    npm test:cover
+  displayName: 'npm install'
