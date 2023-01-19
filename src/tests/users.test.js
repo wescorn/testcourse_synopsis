@@ -28,7 +28,7 @@ describe('APIs Testing...', () => {
         email: 'testing@mailinator.com',
         password: 'TestingPwd',
       });
-      console.log('RES', res.body.data);
+      
     authorizationToken = res.body.data.token;
     expect(res.statusCode).toBe(200);
   });
